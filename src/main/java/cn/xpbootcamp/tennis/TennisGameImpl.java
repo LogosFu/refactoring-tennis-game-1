@@ -46,18 +46,7 @@ public class TennisGameImpl implements TennisGame {
             }
             return score;
         } else {
-            String score = "";
-            int tempScore = 0;
-            for (int i = 1; i < 3; i++) {
-                if (i == 1) {
-                    tempScore = player1Point;
-                } else {
-                    score += "-";
-                    tempScore = player2Point;
-                }
-                score += getScoreNames(tempScore);
-            }
-            return score;
+            return getScoreNames(player1Point) + "-" + getScoreNames(player2Point);
         }
     }
 
