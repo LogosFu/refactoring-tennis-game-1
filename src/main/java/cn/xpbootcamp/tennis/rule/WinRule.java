@@ -1,4 +1,4 @@
-package cn.xpbootcamp.tennis;
+package cn.xpbootcamp.tennis.rule;
 
 public class WinRule extends ScoreRule {
 

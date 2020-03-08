@@ -1,4 +1,4 @@
-package cn.xpbootcamp.tennis;
+package cn.xpbootcamp.tennis.rule;
 
 public class Player {
 
@@ -10,7 +10,7 @@ public class Player {
     this.point = point;
   }
 
-  void updatePlayerPoint(String playerName) {
+  public void updatePlayerPoint(String playerName) {
     if (playerName.equals(name)) {
       point++;
     }

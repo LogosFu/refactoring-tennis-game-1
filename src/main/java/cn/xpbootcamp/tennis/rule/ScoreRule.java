@@ -1,4 +1,4 @@
-package cn.xpbootcamp.tennis;
+package cn.xpbootcamp.tennis.rule;
 
 public abstract class ScoreRule {
 
