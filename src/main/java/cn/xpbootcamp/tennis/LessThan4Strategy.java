@@ -2,8 +2,12 @@ package cn.xpbootcamp.tennis;
 
 public class LessThan4Strategy extends ScoreStrategy {
 
+  public LessThan4Strategy(Player player1, Player player2) {
+    super(player1, player2);
+  }
+
   @Override
-  public boolean isMatch(Player player1, Player player2) {
+  public boolean isMatch() {
     this.player1 = player1;
     this.player2 = player2;
     return true;
