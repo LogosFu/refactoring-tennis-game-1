@@ -25,32 +25,39 @@ public class TennisGameImpl implements TennisGame {
 
     public String getScore() {
         if (player1Point == player2Point) {
-            String score = "";
-            if (player1Point < 3) {
-                score = scores[player1Point] + "-All";
-            } else {
-                score = "Deuce";
-            }
-            return score;
+            return getScoreForPointEqual();
         } else if (player1Point >= 4 || player2Point >= 4) {
-            String score = "";
             int minusResult = player1Point - player2Point;
             if (minusResult == 1) {
-                score = "Advantage " + player1Name;
-            } else if (minusResult == -1) {
-                score = "Advantage " + player2Name;
-            } else if (minusResult >= 2) {
-                score = "Win for " + player1Name;
-            } else {
-                score = "Win for " + player2Name;
+                return "Advantage " + player1Name;
             }
-            return score;
+            if (minusResult == -1) {
+                return "Advantage " + player2Name;
+            }
+            if (minusResult >= 2) {
+                return "Win for " + player1Name;
+            }
+            return "Win for " + player2Name;
         } else {
-            String score = "";
-            score += scores[player1Point];
-            score += "-";
-            score += scores[player2Point];
-            return score;
+            return getScoreForBothBlow4();
         }
+    }
+
+    private String getScoreForBothBlow4() {
+        String score = "";
+        score += scores[player1Point];
+        score += "-";
+        score += scores[player2Point];
+        return score;
+    }
+
+    private String getScoreForPointEqual() {
+        String score;
+        if (player1Point < 3) {
+            score = scores[player1Point] + "-All";
+        } else {
+            score = "Deuce";
+        }
+        return score;
     }
 }
