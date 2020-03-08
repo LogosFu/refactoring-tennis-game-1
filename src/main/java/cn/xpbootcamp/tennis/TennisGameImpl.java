@@ -21,21 +21,24 @@ public class TennisGameImpl implements TennisGame {
     public String getScore() {
         if (player1.point == player2.point) {
             return getScoreForPointEqual();
-        } else if (player1.point >= 4 || player2.point >= 4) {
-            int minusResult = player1.point - player2.point;
-            if (minusResult == 1) {
-                return "Advantage " + player1.name;
-            }
-            if (minusResult == -1) {
-                return "Advantage " + player2.name;
-            }
-            if (minusResult >= 2) {
-                return "Win for " + player1.name;
-            }
-            return "Win for " + player2.name;
-        } else {
-            return getScoreForBothBlow4();
         }
+        if (onePlayerLeading1PointAndWinMoreThan4(player1, player2)) {
+            return "Advantage " + player1.name;
+        }
+        if (onePlayerLeading1PointAndWinMoreThan4(player2, player1)) {
+            return "Advantage " + player2.name;
+        }
+        if (player1.point >= 4 && player1.point - player2.point >= 2) {
+            return "Win for " + player1.name;
+        }
+        if (player2.point >= 4 && player2.point - player1.point >= 2) {
+            return "Win for " + player2.name;
+        }
+        return getScoreForBothBlow4();
+    }
+
+    private boolean onePlayerLeading1PointAndWinMoreThan4(Player player1, Player player2) {
+        return player1.point >= 4 && player1.point - player2.point == 1;
     }
 
     private String getScoreForBothBlow4() {
