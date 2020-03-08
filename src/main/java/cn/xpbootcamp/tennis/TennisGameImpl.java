@@ -17,35 +17,31 @@ public class TennisGameImpl implements TennisGame {
     }
 
     public String getScore() {
-        if (player1.getPoint() == player2.getPoint()) {
-            if (player1.getPoint() < 3) {
-                return getScoreNames(player1.getPoint()) + "-All";
-            } else {
-                return "Deuce";
-            }
-        } else if (player1.getPoint() >= 4 || player2.getPoint() >= 4) {
-            String score = "";
-            if (player1.getPoint() - player2.getPoint() == 1) {
-                score = "Advantage " + player1.getName();
-            }
-            if (player1.getPoint() - player2.getPoint() == -1) {
-                score = "Advantage " + player2.getName();
-            }
-            if (player1.getPoint() - player2.getPoint() >= 2) {
-                score = "Win for " + player1.getName();
-            }
-            if (player2.getPoint() - player1.getPoint() >= 2) {
-                score = "Win for " + player2.getName();
-            }
-            return score;
-        } else {
-            return getScoreNames(player1.getPoint()) + "-" + getScoreNames(player2.getPoint());
+        if (player1.isFlat(player2)) {
+            return player1.flatRule();
         }
+        if (player1.isAdvantage(player2)) {
+            return player1.getAdvantageScore();
+        }
+        if (player2.isAdvantage(player1)) {
+            return player2.getAdvantageScore();
+        }
+        if (player1.isWin(player2)) {
+            return getWinScore(player1);
+        }
+        if (player2.isWin(player1)) {
+            return getWinScore(player2);
+        }
+        return getUnder4Score();
     }
 
-    private String getScoreNames(int point) {
-        String[] scoresNames = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
-        return scoresNames[point];
+    private String getUnder4Score() {
+        return player1.getScoreNames(player1.getPoint()) + "-" + player1
+            .getScoreNames(player2.getPoint());
+    }
+
+    private String getWinScore(Player player1) {
+        return "Win for " + player1.getName();
     }
 
 }
