@@ -8,6 +8,8 @@ public class TennisGameImpl implements TennisGame {
     private String player1Name;
     private String player2Name;
 
+    private String[] scores = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
+
     public TennisGameImpl(String player1Name, String player2Name) {
         this.player1Name = player1Name;
         this.player2Name = player2Name;
@@ -24,21 +26,12 @@ public class TennisGameImpl implements TennisGame {
     public String getScore() {
         String score = "";
         if (player1Point == player2Point) {
-            switch (player1Point) {
-                case 0:
-                    score = "Love" + "-All";
-                    break;
-                case 1:
-                    score = "Fifteen" + "-All";
-                    break;
-                case 2:
-                    score = "Thirty" + "-All";
-                    break;
-                default:
-                    score = "Deuce";
-                    break;
-
+            if (player1Point < 3) {
+                score = scores[player1Point] + "-All";
+            } else {
+                score = "Deuce";
             }
+
         } else if (player1Point >= 4 || player2Point >= 4) {
             int minusResult = player1Point - player2Point;
             if (minusResult == 1) {
@@ -59,20 +52,7 @@ public class TennisGameImpl implements TennisGame {
                     score += "-";
                     tempScore = player2Point;
                 }
-                switch (tempScore) {
-                    case 0:
-                        score += "Love";
-                        break;
-                    case 1:
-                        score += "Fifteen";
-                        break;
-                    case 2:
-                        score += "Thirty";
-                        break;
-                    case 3:
-                        score += "Forty";
-                        break;
-                }
+                score += scores[tempScore];
             }
         }
         return score;
