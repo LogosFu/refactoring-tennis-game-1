@@ -44,12 +44,9 @@ public class TennisGameImpl implements TennisGame {
                 score = "Win for " + player2Name;
             }
         } else {
-            int tempScore = 0;
-            tempScore = player1Point;
-            score += scores[tempScore];
+            score += scores[player1Point];
             score += "-";
-            tempScore = player2Point;
-            score += scores[tempScore];
+            score += scores[player2Point];
         }
         return score;
     }
