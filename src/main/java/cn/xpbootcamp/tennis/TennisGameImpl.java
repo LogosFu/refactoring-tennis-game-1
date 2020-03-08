@@ -3,67 +3,41 @@ package cn.xpbootcamp.tennis;
 
 public class TennisGameImpl implements TennisGame {
 
-    private int player1Point = 0;
-    private int player2Point = 0;
-    private String player1Name;
-    private String player2Name;
+    private Player player1;
+    private Player player2;
 
     public TennisGameImpl(String player1Name, String player2Name) {
-        this.player1Name = player1Name;
-        this.player2Name = player2Name;
+        this.player1 = new Player(player1Name, 0);
+        this.player2 = new Player(player2Name, 0);
     }
 
     public void wonPoint(String playerName) {
-        if (playerName.equals(player1Name)) {
-            player1Point += 1;
-        }
-        if (playerName.equals(player2Name)) {
-            player2Point += 1;
-        }
+        player1.updatePlayerPoint(playerName);
+        player2.updatePlayerPoint(playerName);
     }
 
     public String getScore() {
-        String love = "Love";
-        String fifteen = "Fifteen";
-        String thirty = "Thirty";
-        String forty = "Forty";
-        String[] scoreNames = new String[]{love, fifteen, thirty, forty};
-        if (player1Point == player2Point) {
-            String score = "";
-            if (player1Point < 3) {
-                score = scoreNames[player1Point] + "-All";
+        String[] scoreNames = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
+        if (player1.isFlat(player2)) {
+            if (player1.point < 3) {
+                return scoreNames[player1.point] + "-All";
             } else {
-                score = "Deuce";
+                return "Deuce";
             }
-            return score;
-        } else if (player1Point >= 4 || player2Point >= 4) {
-            String score = "";
-            int minusResult = player1Point - player2Point;
-            if (minusResult == 1) {
-                score = "Advantage " + player1Name;
-            } else {
-                if (minusResult == -1) {
-                    score = "Advantage " + player2Name;
-                } else if (minusResult >= 2) {
-                    score = "Win for " + player1Name;
-                } else {
-                    score = "Win for " + player2Name;
-                }
+        } else if (player1.point >= 4 || player2.point >= 4) {
+            if (player1.isAdvantage(player2)) {
+                return "Advantage " + player1.name;
             }
-            return score;
+            if (player2.isAdvantage(player1)) {
+                return "Advantage " + player2.name;
+            }
+            if (player1.isWin(player2)) {
+                return "Win for " + player1.name;
+            }
+            return "Win for " + player2.name;
         } else {
-            String score = "";
-            int tempScore = 0;
-            for (int i = 1; i < 3; i++) {
-                if (i == 1) {
-                    tempScore = player1Point;
-                } else {
-                    score += "-";
-                    tempScore = player2Point;
-                }
-                score += scoreNames[tempScore];
-            }
-            return score;
+            return scoreNames[player1.point] + "-" + scoreNames[player2.point];
         }
     }
+
 }
