@@ -24,15 +24,16 @@ public class TennisGameImpl implements TennisGame {
     }
 
     public String getScore() {
-        String score = "";
         if (player1Point == player2Point) {
+            String score = "";
             if (player1Point < 3) {
                 score = scores[player1Point] + "-All";
             } else {
                 score = "Deuce";
             }
-
+            return score;
         } else if (player1Point >= 4 || player2Point >= 4) {
+            String score = "";
             int minusResult = player1Point - player2Point;
             if (minusResult == 1) {
                 score = "Advantage " + player1Name;
@@ -43,11 +44,13 @@ public class TennisGameImpl implements TennisGame {
             } else {
                 score = "Win for " + player2Name;
             }
+            return score;
         } else {
+            String score = "";
             score += scores[player1Point];
             score += "-";
             score += scores[player2Point];
+            return score;
         }
-        return score;
     }
 }
