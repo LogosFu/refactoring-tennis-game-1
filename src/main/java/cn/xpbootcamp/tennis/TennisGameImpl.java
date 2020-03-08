@@ -23,21 +23,17 @@ public class TennisGameImpl implements TennisGame {
     }
 
     public String getScore() {
+        String love = "Love";
+        String fifteen = "Fifteen";
+        String thirty = "Thirty";
+        String forty = "Forty";
+        String[] scoreNames = new String[]{love, fifteen, thirty, forty};
         if (player1Point == player2Point) {
             String score = "";
-            switch (player1Point) {
-                case 0:
-                    score = "Love-All";
-                    break;
-                case 1:
-                    score = "Fifteen-All";
-                    break;
-                case 2:
-                    score = "Thirty-All";
-                    break;
-                default:
-                    score = "Deuce";
-                    break;
+            if (player1Point < 3) {
+                score = scoreNames[player1Point] + "-All";
+            } else {
+                score = "Deuce";
             }
             return score;
         } else if (player1Point >= 4 || player2Point >= 4) {
@@ -65,20 +61,7 @@ public class TennisGameImpl implements TennisGame {
                     score += "-";
                     tempScore = player2Point;
                 }
-                switch (tempScore) {
-                    case 0:
-                        score += "Love";
-                        break;
-                    case 1:
-                        score += "Fifteen";
-                        break;
-                    case 2:
-                        score += "Thirty";
-                        break;
-                    case 3:
-                        score += "Forty";
-                        break;
-                }
+                score += scoreNames[tempScore];
             }
             return score;
         }
