@@ -37,19 +37,23 @@ public class Player {
   }
 
   String getAdvantageScore() {
-      return "Advantage " + getName();
+    return "Advantage " + getName();
   }
 
-  String getScoreNames(int point) {
-      String[] scoresNames = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
-      return scoresNames[point];
+  String getFlatScore() {
+    if (getPoint() < 3) {
+      return ScoreRule.getScoreNames(getPoint()) + "-All";
+    } else {
+      return "Deuce";
+    }
   }
 
-  String flatRule() {
-      if (getPoint() < 3) {
-          return getScoreNames(getPoint()) + "-All";
-      } else {
-          return "Deuce";
-      }
+  String getUnder4Score(Player player2) {
+    return ScoreRule.getScoreNames(getPoint()) + "-" + ScoreRule
+        .getScoreNames(player2.getPoint());
+  }
+
+  String getWinScore() {
+    return "Win for " + getName();
   }
 }
