@@ -1,6 +1,9 @@
 
 package cn.xpbootcamp.tennis;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class TennisGameImpl implements TennisGame {
 
     private Player player1;
@@ -19,24 +22,12 @@ public class TennisGameImpl implements TennisGame {
     }
 
     public String getScore() {
-        LessThan4Strategy lessThan4Strategy = new LessThan4Strategy(player1, player2);
-        EqualStrategy equalStrategy = new EqualStrategy(player1, player2);
-        if (equalStrategy.isMatch()) {
-            return equalStrategy.getScore();
-        }
-        if (player1.onePlayerLeading1PointAndWinMoreThan4(player2)) {
-            return "Advantage " + player1.name;
-        }
-        if (player2.onePlayerLeading1PointAndWinMoreThan4(player1)) {
-            return "Advantage " + player2.name;
-        }
-        if (player1.onePlayerLeading2PointAndWinMoreThan4(player2)) {
-            return "Win for " + player1.name;
-        }
-        if (player2.onePlayerLeading2PointAndWinMoreThan4(player1)) {
-            return "Win for " + player2.name;
-        }
-        lessThan4Strategy.isMatch();
-        return lessThan4Strategy.getScore();
+        List<ScoreStrategy> scoreStrategies = Arrays
+            .asList(new EqualStrategy(player1, player2), new AdvantageStrategy(
+                    player1, player2), new AdvantageStrategy(player2, player1),
+                new WinStrategy(player1, player2), new WinStrategy(player2, player1),
+                new LessThan4Strategy(player1, player2));
+        return scoreStrategies.stream().filter(ScoreStrategy::isMatch).findAny()
+            .map(ScoreStrategy::getScore).get();
     }
 }

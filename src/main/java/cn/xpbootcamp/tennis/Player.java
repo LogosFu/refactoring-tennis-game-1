@@ -17,7 +17,7 @@ public class Player {
     }
   }
 
-  boolean onePlayerLeading2PointAndWinMoreThan4(Player player2) {
+  boolean win(Player player2) {
       return point >= 4 && point - player2.point >= 2;
   }
 
