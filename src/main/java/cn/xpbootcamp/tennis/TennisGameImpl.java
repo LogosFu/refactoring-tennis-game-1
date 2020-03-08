@@ -6,6 +6,7 @@ public class TennisGameImpl implements TennisGame {
     private Player player1;
     private Player player2;
 
+    LessThan4Strategy lessThan4Strategy = new LessThan4Strategy();
     private String[] scores = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
 
     public TennisGameImpl(String player1Name, String player2Name) {
@@ -22,32 +23,22 @@ public class TennisGameImpl implements TennisGame {
         if (player1.point == player2.point) {
             return getScoreForPointEqual();
         }
-        if (onePlayerLeading1PointAndWinMoreThan4(player1, player2)) {
+        if (player1.onePlayerLeading1PointAndWinMoreThan4(player2)) {
             return "Advantage " + player1.name;
         }
-        if (onePlayerLeading1PointAndWinMoreThan4(player2, player1)) {
+        if (player2.onePlayerLeading1PointAndWinMoreThan4(player1)) {
             return "Advantage " + player2.name;
         }
-        if (player1.point >= 4 && player1.point - player2.point >= 2) {
+        if (player1.onePlayerLeading2PointAndWinMoreThan4(player2)) {
             return "Win for " + player1.name;
         }
-        if (player2.point >= 4 && player2.point - player1.point >= 2) {
+        if (player2.onePlayerLeading2PointAndWinMoreThan4(player1)) {
             return "Win for " + player2.name;
         }
-        return getScoreForBothBlow4();
+        lessThan4Strategy.isMatch(player1,player2);
+        return lessThan4Strategy.getScore();
     }
 
-    private boolean onePlayerLeading1PointAndWinMoreThan4(Player player1, Player player2) {
-        return player1.point >= 4 && player1.point - player2.point == 1;
-    }
-
-    private String getScoreForBothBlow4() {
-        String score = "";
-        score += scores[player1.point];
-        score += "-";
-        score += scores[player2.point];
-        return score;
-    }
 
     private String getScoreForPointEqual() {
         String score;

@@ -16,4 +16,12 @@ public class Player {
       this.point++;
     }
   }
+
+  boolean onePlayerLeading2PointAndWinMoreThan4(Player player2) {
+      return point >= 4 && point - player2.point >= 2;
+  }
+
+  boolean onePlayerLeading1PointAndWinMoreThan4(Player player2) {
+      return point >= 4 && point - player2.point == 1;
+  }
 }
