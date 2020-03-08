@@ -27,4 +27,9 @@ public class Player {
   boolean isFlat(Player player2) {
       return point == player2.point;
   }
+
+  boolean isLowThan4AndNotFlat(Player player2) {
+    return point < 4 && player2.point < 4
+        && player2.point != point;
+  }
 }
